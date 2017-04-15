@@ -13,4 +13,7 @@
 
     <bean id="transactionManager" class="org.springframework.batch.support.transaction.ResourcelessTransactionManager"/>
 
+    <import resource="classpath:batch/spring-batch-csv.xml"/>
+    <import resource="classpath:batch/spring-batch-jdbc.xml"/>
+
 </beans>

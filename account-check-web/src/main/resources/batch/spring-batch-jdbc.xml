@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:batch="http://www.springframework.org/schema/batch"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/batch
+       http://www.springframework.org/schema/batch/spring-batch.xsd">
+
+    <batch:job id="jdbcJob">
+        <batch:step id="jdbcStep">
+            <batch:tasklet transaction-manager="transactionManager">
+                <batch:chunk reader="jdbcItemReader"
+                             writer="jdbcItemWriter"
+                             processor="jdbcProcessor"
+                             commit-interval="1"/>
+            </batch:tasklet>
+        </batch:step>
+    </batch:job>
+
+    <bean id="jdbcItemReader" class="org.springframework.batch.item.database.JdbcCursorItemReader" scope="step">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="sql" value="select ID,USER_ID,USERNAME,PASSWORD from T_USER where id &lt; ?"/>
+        <property name="rowMapper">
+            <bean class="org.springframework.jdbc.core.BeanPropertyRowMapper">
+                <property name="mappedClass" value="com.cheng.springbatch.jdbc.User"/>
+            </bean>
+        </property>
+        <property name="preparedStatementSetter" ref="paramStatementSetter"/>
+    </bean>
+
+    <bean id="paramStatementSetter" class="org.springframework.batch.core.resource.ListPreparedStatementSetter"
+          scope="step">
+        <property name="parameters">
+            <list>
+                <value>#{jobParameters['id']}</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="jdbcItemWriter" class="org.springframework.batch.item.database.JdbcBatchItemWriter">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="sql" value="insert into T_DEST_USER
+        (ID,USER_ID,USERNAME,PASSWORD,UPDATE_TIME,UPDATE_USER)
+        values
+        (:id,:userId,:userName,:password,:updateTime,:updateUser)"/>
+        <property name="itemSqlParameterSourceProvider">
+            <bean class="org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider"/>
+        </property>
+    </bean>
+
+</beans>
