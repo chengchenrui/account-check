@@ -11,5 +11,11 @@
 
     <artifactId>account-check-api</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>com.account.demo</groupId>
+            <artifactId>account-check-service</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+    </dependencies>
 </project>

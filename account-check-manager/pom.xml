@@ -11,5 +11,21 @@
 
     <artifactId>account-check-manager</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>com.account.demo</groupId>
+            <artifactId>account-check-common</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.account.demo</groupId>
+            <artifactId>account-check-dal</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.account.demo</groupId>
+            <artifactId>account-check-api</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+    </dependencies>
 </project>

@@ -13,6 +13,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.account.demo</groupId>
+            <artifactId>account-check-service</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.batch</groupId>
             <artifactId>spring-batch-core</artifactId>
         </dependency>
