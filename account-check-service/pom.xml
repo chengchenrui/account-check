@@ -15,7 +15,7 @@
         <dependency>
             <groupId>com.account.demo</groupId>
             <artifactId>account-check-manager</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
 </project>
